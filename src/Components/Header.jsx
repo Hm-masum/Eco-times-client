@@ -2,7 +2,7 @@ import {Button, Navbar } from "flowbite-react";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
-  const navlinks = (
+  const navLinks = (
     <>
       <NavLink to={`/`}>Home</NavLink>
       <NavLink to={`/addArticle`}>Add Articles</NavLink>
@@ -28,7 +28,7 @@ const Header = () => {
           <Button>Login</Button>
         </div>
 
-        <Navbar.Collapse>{navlinks}</Navbar.Collapse>
+        <Navbar.Collapse>{navLinks}</Navbar.Collapse>
       </Navbar>
     </div>
   );
