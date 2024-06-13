@@ -1,5 +1,6 @@
 import {Button, Navbar } from "flowbite-react";
 import { NavLink } from "react-router-dom";
+import ButtonComp from "./ButtonComp";
 
 const Header = () => {
   const navLinks = (
@@ -25,7 +26,7 @@ const Header = () => {
         </Navbar.Brand>
 
         <div className="flex md:order-2">
-          <Button>Login</Button>
+           <NavLink to={`/login`}><ButtonComp value={"Login"}></ButtonComp></NavLink>
         </div>
 
         <Navbar.Collapse>{navLinks}</Navbar.Collapse>
