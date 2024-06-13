@@ -1,12 +1,60 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import imgBg from "../../assets/login.png";
 import ButtonComp from "../../Components/ButtonComp";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const {signIn,signInWithGoogle,signInWithGithub,setLoading}=useAuth()
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from=location?.state || '/';
+
+  const handleSubmit= async(e) =>{
+    e.preventDefault();
+    const form=e.target;
+    const email=form.email.value
+    const password=form.password.value
+
+    try{
+      await signIn(email,password)
+      navigate(from)
+      toast.success('sign in successful')
+    }
+    catch(err){
+      console.log(err)
+      toast.error('sign in not successful')
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleSignIn=async()=>{
+    try{
+      await signInWithGoogle()
+      navigate(from)
+      toast.success('sign up successful')
+    }
+    catch(err){
+      console.log(err)
+      toast.error('sign up not successful')
+    }
+  }
+
+  const handleGithubSignIn=async()=>{
+    try{
+      await signInWithGithub()
+      navigate(from)
+      toast.success('sign up successful')
+    }
+    catch(err){
+      console.log(err)
+      toast.error('sign up not successful')
+    }
+  }
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center px-3 md:px-24">
@@ -17,7 +65,7 @@ const Login = () => {
       <div className="md:w-1/2 px-2 md:px-14 space-y-4">
         <h2 className="text-4xl font-semibold text-center pb-3">Login Please!</h2>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
               <label className="block mb text-sm">Email address</label>
@@ -75,13 +123,13 @@ const Login = () => {
 
         <div className="flex justify-center gap-2">
           <button
-            // onClick={handleGoogleSignIn}
+            onClick={handleGoogleSignIn}
             className="w-full"
           >
             <ButtonComp value={"Google"} icon={"google"}></ButtonComp>
           </button>
           <button
-            // onClick={handleGithubSignIn}
+            onClick={handleGithubSignIn}
             className="w-full"
           >
             <ButtonComp value={"Github"} icon={'github'}></ButtonComp>
