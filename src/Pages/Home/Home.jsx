@@ -1,10 +1,11 @@
+import Carosel from "./Carosel";
 import Plans from "./Plans";
 
 
 const Home = () => {
     return (
         <div>
-            <h2>masum</h2>
+            <Carosel></Carosel>
             <Plans></Plans>
         </div>
     );

@@ -117,7 +117,7 @@ const AddArticle = () => {
             type="submit"
             className="bg-purple-700 font-semibold w-full rounded-md text-center py-3 text-white"
           >
-            Add Article
+             Add Article
           </button>
         </div>
       </form>
