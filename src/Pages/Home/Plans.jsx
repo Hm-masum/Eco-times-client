@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Plans = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+    <div className="flex py-10 flex-col md:flex-row items-center justify-center gap-4">
       <div className="border rounded-xl md:w-1/3 space-y-16 p-4">
         <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Normal user</h2>
@@ -23,7 +23,7 @@ const Plans = () => {
             </ul>
           </div>
           <div>
-            <Link type="button" className=" text-center block bg-purple-600 py-2 font-semibold text-white rounded-3xl">Get premium</Link>
+            <Link to={`/subscription`} type="button" className=" text-center block bg-purple-600 py-2 font-semibold text-white rounded-3xl">Get premium</Link>
           </div>
           <div>Take premium offer for explore premium content and you can give offer for 1 minute..</div>
         </div>
@@ -48,7 +48,7 @@ const Plans = () => {
             </ul>
           </div>
           <div>
-            <Link type="button" className=" text-center block bg-purple-600 py-2 font-semibold text-white rounded-3xl">Get premium</Link>
+            <Link to={`/subscription`} type="button" className=" text-center block bg-purple-600 py-2 font-semibold text-white rounded-3xl">Get premium</Link>
           </div>
           <div>Take premium offer for explore premium content and you can give offer for 5 days..</div>
         </div>
@@ -73,7 +73,7 @@ const Plans = () => {
             </ul>
           </div>
           <div>
-            <Link type="button" className=" text-center block bg-purple-600 py-2 font-semibold text-white rounded-3xl">Get premium</Link>
+            <Link to={`/subscription`} type="button" className=" text-center block bg-purple-600 py-2 font-semibold text-white rounded-3xl">Get premium</Link>
           </div>
           <div>Take premium offer for explore premium content and you can give offer for 10 days..</div>
         </div>
