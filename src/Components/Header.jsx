@@ -1,5 +1,5 @@
 import {Avatar, Navbar } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ButtonComp from "./ButtonComp";
 import useAuth from "../Hooks/useAuth";
 
@@ -31,9 +31,11 @@ const Header = () => {
         <div className="flex md:order-2">
           {user ?
             <div className="gap-4 flex items-center">
-              <div className="flex flex-wrap gap-2">
-                 <Avatar img={user?.photoURL} rounded />
-              </div>
+              <Link to={`/myProfile`}>
+                <div className="flex flex-wrap gap-2">
+                   <Avatar img={user?.photoURL} rounded />
+                </div>
+              </Link>
               <button onClick={logOut}><ButtonComp value={"LogOut"}></ButtonComp></button>
             </div> :
             <>
