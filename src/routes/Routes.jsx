@@ -11,6 +11,9 @@ import PremiumArticle from "../Pages/PremiumArticle/PremiumArticle";
 import MyArticle from "../Pages/MyArticle/MyArticle";
 import AllArticle from "../Pages/AllArticle/AllArticle";
 import DashboardLayOut from "../Layouts/DashboardLayOut";
+import AllArticles from "../Pages/DashBoard/AllArticles";
+import AllUser from "../Pages/DashBoard/AllUser";
+import AddPublisher from "../Pages/DashBoard/AddPublisher";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +37,7 @@ const router = createBrowserRouter([
         element: <AddArticle></AddArticle>,
       },
       {
-        path: "/articleDetails",
+        path: "/article/:id",
         element: <ArticleDetails></ArticleDetails>,
       },
       {
@@ -62,13 +65,21 @@ const router = createBrowserRouter([
   {
     path:'dashboard',
     element:<DashboardLayOut></DashboardLayOut>,
-    // children:[
-    //   {
-    //     index:true,
-    //     element:<DashboardLayOut></DashboardLayOut>
-    //   },
+    children:[
+      {
+        index:true,
+        element:<AllUser></AllUser>
+      },
+      {
+        path: "all-articles",
+        element:<AllArticles></AllArticles>
+      },
+      {
+        path: "add-publisher",
+        element:<AddPublisher></AddPublisher>
+      },
 
-    // ]
+    ]
   }
 ]);
 

@@ -4,9 +4,11 @@ import toast from "react-hot-toast";
 import Select from "react-select";
 import { useState } from "react";
 import makeAnimated from 'react-select/animated';
+import useAuth from "../../Hooks/useAuth";
 
 const AddArticle = () => {
   const [selectedOption, setSelectedOption] = useState([]);
+  const {user}=useAuth()
 
   const handleAddArticle = async (e) => {
     e.preventDefault();
@@ -21,11 +23,17 @@ const AddArticle = () => {
     try {
       const image_url = await imageUpload(image);
       const articleData = {
+        AuthorName:user?.displayName,
+        AuthorPhoto:user?.photoURL,
+        AuthorEmail:user?.email,
         title,
         publisher,
         description,
         tags,
         image: image_url,
+        postedDate:'1,1,1',
+        IsPremium:'no',
+        status:'pending',
       };
       console.log(articleData);
 
