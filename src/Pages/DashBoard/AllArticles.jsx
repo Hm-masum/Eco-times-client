@@ -1,4 +1,23 @@
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../Components/LoadingSpinner";
+import SmallButton from "../../Components/SmallButton";
+import { Avatar } from "flowbite-react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
 const AllArticles = () => {
+  const axiosSecure=useAxiosSecure()
+
+  const { data: articles = [], isLoading } = useQuery({
+    queryKey: ["all-articles"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/article`);
+      return data;
+    },
+  });
+
+  if (isLoading) return <LoadingSpinner />
+
+
   return (
     <div>
       <div className="py-8">
@@ -11,7 +30,7 @@ const AllArticles = () => {
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Title
+                    Author
                   </th>
                   <th
                     scope="col"
@@ -29,7 +48,7 @@ const AllArticles = () => {
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Author
+                    Title
                   </th>
                   <th
                     scope="col"
@@ -77,41 +96,45 @@ const AllArticles = () => {
               </thead>
               <tbody>
                 {/* Room row data */}
-                <tr>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xyz</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xyz</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xyz</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xyz</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xys</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xys</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xys</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xys</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xys</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xys</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">xys</p>
-                  </td>
-                </tr>
+                {
+                  articles.map(article => <tr key={article._id}>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                       <div className="flex flex-wrap gap-2">
+                         <Avatar img={article.authorPhoto} rounded />
+                      </div>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">{article.authorName}</p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">{article.authorEmail}</p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">{article.title.slice(0,10)}</p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">{article.postedDate}</p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">{article.status}</p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">{article.publisher}</p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"approve"}/></button></p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"Decline"}/></button></p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"Delete"}/></button></p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"Premium"}/></button></p>
+                    </td>
+                  </tr>)
+                }
               </tbody>
             </table>
           </div>

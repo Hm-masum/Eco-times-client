@@ -6,7 +6,7 @@ import { FcSettings } from "react-icons/fc";
 import { GrLogout } from "react-icons/gr";
 import { AiOutlineBars } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa6";
-import { FaChartPie, FaRegNewspaper } from "react-icons/fa";
+import { FaChartBar, FaChartPie, FaRegNewspaper } from "react-icons/fa";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -62,6 +62,20 @@ const Sidebar = () => {
                   }`
                 }
               >
+                <FaChartBar className="w-5 h-5" />
+
+                <span className="mx-4 font-medium">Statistics</span>
+              </NavLink>
+
+              <NavLink
+                to="all-users"
+                end
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
                 <FaUsers className="w-5 h-5" />
 
                 <span className="mx-4 font-medium">All Users</span>
@@ -100,7 +114,7 @@ const Sidebar = () => {
           <hr />
           {/* Profile Menu */}
           <NavLink
-            to="/dashboard/profile"
+            to="/myProfile"
             className={({ isActive }) =>
               `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                 isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"

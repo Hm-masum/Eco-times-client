@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const Plans = () => {
   return (
     <div className="flex py-10 flex-col md:flex-row items-center justify-center gap-4">
-      <div className="border rounded-xl md:w-1/3 space-y-16 p-4">
+      <div className="border rounded-xl md:w-1/3 space-y-24 p-4">
         <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Normal user</h2>
             <div>
                 <h2 className="font-semibold text-2xl">$0</h2>
-                <h2 className="text-sm">1min</h2>
+                <h2 className="text-sm">/1min</h2>
             </div>
         </div>
 
@@ -29,12 +29,12 @@ const Plans = () => {
         </div>
       </div>
 
-      <div className="border rounded-xl md:w-1/3 space-y-16 p-4">
+      <div className="border rounded-xl md:w-1/3 space-y-24 p-4">
         <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Premium user</h2>
             <div>
                 <h2 className="font-semibold text-2xl">$100</h2>
-                <h2 className="text-sm">5 days</h2>
+                <h2 className="text-sm">/5 days</h2>
             </div>
         </div>
 
@@ -54,12 +54,12 @@ const Plans = () => {
         </div>
       </div>
 
-      <div className="border rounded-xl md:w-1/3 space-y-16 p-4">
+      <div className="border rounded-xl md:w-1/3 space-y-24 p-4">
         <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Premium user</h2>
             <div>
                 <h2 className="font-semibold text-2xl">$150</h2>
-                <h2 className="text-sm">10 days</h2>
+                <h2 className="text-sm">/10 days</h2>
             </div>
         </div>
 

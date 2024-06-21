@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useAxiosCommon from "../../Hooks/useAxiosCommon";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,7 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from=location?.state || '/';
+  const axiosCommon=useAxiosCommon()
 
   const handleSubmit= async(e) =>{
     e.preventDefault();
@@ -34,7 +36,17 @@ const Login = () => {
 
   const handleGoogleSignIn=async()=>{
     try{
-      await signInWithGoogle()
+      const result=await signInWithGoogle()
+  
+      //create user entry in the db
+      const userInfo = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image_url: result?.user?.photoURL,
+        role: 'normal user',
+      };
+      await axiosCommon.post("/users", userInfo)
+
       navigate(from)
       toast.success('sign up successful')
     }
@@ -46,7 +58,17 @@ const Login = () => {
 
   const handleGithubSignIn=async()=>{
     try{
-      await signInWithGithub()
+      const result= await signInWithGithub()
+
+      //create user entry in the db
+      const userInfo = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image_url: result?.user?.photoURL,
+        role: 'normal user',
+      };
+      await axiosCommon.post("/users", userInfo)
+
       navigate(from)
       toast.success('sign up successful')
     }

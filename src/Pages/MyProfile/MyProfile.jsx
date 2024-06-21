@@ -37,7 +37,7 @@ const MyProfile = () => {
         <Avatar size="xl" img={user?.photoURL} bordered />
       </div>
 
-      <h2 className="text-center mt-4 text-xl font-semibold">{user.displayName}</h2>
+      <h2 className="text-center mt-4 text-xl font-semibold">{user?.displayName}</h2>
 
       <form onSubmit={handleUpdateProfile}>
         <div className="mb-4">

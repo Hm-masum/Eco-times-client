@@ -71,6 +71,10 @@ const router = createBrowserRouter([
         element:<AllUser></AllUser>
       },
       {
+        path: "all-users",
+        element:<AllUser></AllUser>
+      },
+      {
         path: "all-articles",
         element:<AllArticles></AllArticles>
       },

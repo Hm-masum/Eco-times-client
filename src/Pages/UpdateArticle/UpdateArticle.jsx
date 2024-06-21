@@ -1,85 +1,64 @@
-import { FileInput, Label } from "flowbite-react";
+import { FileInput, Label, Select } from "flowbite-react";
+import { useState } from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { imageUpload } from "../../utils/ImgBB_api";
 import toast from "react-hot-toast";
-import Select from "react-select";
-import { useState } from "react";
 import makeAnimated from 'react-select/animated';
-import useAuth from "../../Hooks/useAuth";
-import { useMutation } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
-const AddArticle = () => {
-  const [selectedOption, setSelectedOption] = useState([]);
-  const {user}=useAuth();
-  const [loading, setLoading] = useState(false)
-  const axiosSecure=useAxiosSecure()
+const UpdateArticle = () => {
+    const [selectedOption, setSelectedOption] = useState([]);
+    const [loading, setLoading] = useState(false)
+    const axiosSecure=useAxiosSecure()
 
-  const { mutateAsync } = useMutation({
-    mutationFn: async articleData => {
-      const { data } = await axiosSecure.post(`/article`, articleData)
-      return data
-    },
-    onSuccess: () => {
-      console.log('Data Saved Successfully')
-      toast.success('Article Added Successfully!')
-      setLoading(false)
-    },
-  })
-
-  const handleAddArticle = async (e) => {
-    e.preventDefault();
-    setLoading(true)
-    const form = e.target;
-    const title = form.title.value;
-    const description = form.description.value;
-    const publisher = form.publisher.value;
-    const image = form.image.files[0];
-    let tags=[]
-    selectedOption.map(tag=>tags.push(tag.value))
-
-    try {
-      const image_url = await imageUpload(image);
-      const articleData = {
-        authorName:user?.displayName,
-        authorPhoto:user?.photoURL,
-        authorEmail:user?.email,
-        title,
-        publisher,
-        description,
-        tags,
-        image: image_url,
-        postedDate: new Date().toLocaleDateString(),
-        isPremium:'no',
-        status:'pending',
+    const handleUpdateArticle = async (e) => {
+        e.preventDefault();
+        setLoading(true)
+        const form = e.target;
+        const title = form.title.value;
+        const description = form.description.value;
+        const publisher = form.publisher.value;
+        const image = form.image.files[0];
+        let tags=[]
+        selectedOption.map(tag=>tags.push(tag.value))
+    
+        try {
+          const image_url = await imageUpload(image);
+          const articleData = {
+            title,
+            publisher,
+            description,
+            tags,
+            image: image_url,
+          };
+          console.log(articleData);
+    
+          //Post request to server
+          //await mutateAsync(articleData)
+    
+        } catch (err) {
+          setLoading(false)
+          console.log(err);
+          toast.error(err.message);
+        }
       };
-      console.log(articleData);
+    
+    
+      const animatedComponents = makeAnimated();
+      const options = [
+        { value: "sports", label: "Sports" },
+        { value: "entertainment", label: "Entertainment" },
+        { value: "Science", label: "Science" },
+        { value: "politics", label: "Politics" },
+        { value: "education", label: "Education" },
+        { value: "international", label: "International" },
+      ];
 
-      //Post request to server
-      await mutateAsync(articleData)
-
-    } catch (err) {
-      setLoading(false)
-      console.log(err);
-      toast.error(err.message);
-    }
-  };
-
-
-  const animatedComponents = makeAnimated();
-  const options = [
-    { value: "sports", label: "Sports" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "Science", label: "Science" },
-    { value: "politics", label: "Politics" },
-    { value: "education", label: "Education" },
-    { value: "international", label: "International" },
-  ];
 
   return (
     <div className="border-2 rounded-xl p-4 md:p-10">
-      <h2 className="text-3xl mb-8 text-center font-semibold">Add Article</h2>
+      <h2 className="text-3xl mb-8 text-center font-semibold">Update Article</h2>
 
-      <form onSubmit={handleAddArticle}>
+      <form onSubmit={handleUpdateArticle}>
         <div className="mb-4">
           <label className="block mb text-sm">Title</label>
           <div className="mt-2">
@@ -146,7 +125,7 @@ const AddArticle = () => {
             disabled={loading}
             className="bg-purple-700 font-semibold w-full rounded-md text-center py-3 text-white"
           >
-             Add Article
+            Update Article
           </button>
         </div>
       </form>
@@ -154,4 +133,4 @@ const AddArticle = () => {
   );
 };
 
-export default AddArticle;
+export default UpdateArticle;

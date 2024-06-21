@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
-import img from '../assets/original-88886f9f92f1045ce3e5a586bcafe0b9.png'
 
-const ArticleCart = () => {
+const ArticleCart = ({article}) => {
+    const {_id,title,publisher,image,description}=article;
     return (
         <div className='space-y-2'>
             <div>
-                <img className='h-[215px] w-full' src={img} alt="" />
+                <img className='h-[215px] w-full' src={image} alt="" />
             </div>
             <div className='space-y-2'>
-                <h4 className=' font-semibold'>Gardian publication</h4>
+                <h4 className=' font-semibold'>{publisher}</h4>
 
-                <h2 className='text-2xl font-semibold'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+                <h2 className='text-2xl font-semibold'>{title.slice(0,50)}</h2>
 
-                <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, impedit. Maxime, suscipit. Vero quibusdam dignissimos deserunt qui officia magnam pariatur?</p>
+                <p className='text-sm'>{description.slice(0,150)}</p>
 
-                <div><Link to={'/article/:id'}><ButtonComp value={"View Details"}></ButtonComp></Link></div>
+                <div><Link to={`/article/${_id}`}><ButtonComp value={"View Details"}></ButtonComp></Link></div>
             </div>
         </div>
     );

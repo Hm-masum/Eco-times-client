@@ -3,14 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import imgBg from "../../assets/login.png";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import useAuth from "../../Hooks/useAuth";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { FileInput, Label } from "flowbite-react";
+import { imageUpload } from "../../utils/ImgBB_api";
+import useAxiosCommon from "../../Hooks/useAxiosCommon";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { createUser, updateUserProfile, setLoading } = useAuth();
   const navigate = useNavigate();
+  const axiosCommon=useAxiosCommon()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,25 +21,27 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-    const formData = new FormData();
-    formData.append("image", image);
 
     try {
       setLoading(true);
-      // 1.upload img and get url
-      const { data } = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_IMG_BB_API_KEY
-        }`,
-        formData
-      );
+      const image_url = await imageUpload(image);
 
       // sign up
       const result = await createUser(email, password);
       console.log(result);
 
       // save username and photo
-      await updateUserProfile(name, data.data.display_url);
+      await updateUserProfile(name, image_url);
+
+       // create user entry in the db
+       const userInfo = {
+        name,
+        email,
+        image_url,
+        role:'normal user',
+      };
+      await axiosCommon.post("/users", userInfo)
+
       navigate("/");
       toast.success("sign up successful");
     } catch (err) {
