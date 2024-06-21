@@ -1,14 +1,30 @@
-import { FileInput, Label, Select } from "flowbite-react";
+import { FileInput, Label} from "flowbite-react";
 import { useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { imageUpload } from "../../utils/ImgBB_api";
 import toast from "react-hot-toast";
 import makeAnimated from 'react-select/animated';
+import { useLoaderData } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import Select from "react-select";
 
 const UpdateArticle = () => {
     const [selectedOption, setSelectedOption] = useState([]);
     const [loading, setLoading] = useState(false)
     const axiosSecure=useAxiosSecure()
+    const loadedData=useLoaderData()
+
+    const { mutateAsync } = useMutation({
+      mutationFn: async articleData => {
+        const { data } = await axiosSecure.put(`update-article/${loadedData._id}`, articleData)
+        return data
+      },
+      onSuccess: () => {
+        console.log('Data Saved Successfully')
+        toast.success('Article updated Successfully!')
+        setLoading(false)
+      },
+    })
 
     const handleUpdateArticle = async (e) => {
         e.preventDefault();
@@ -33,7 +49,7 @@ const UpdateArticle = () => {
           console.log(articleData);
     
           //Post request to server
-          //await mutateAsync(articleData)
+          await mutateAsync(articleData)
     
         } catch (err) {
           setLoading(false)
@@ -66,7 +82,7 @@ const UpdateArticle = () => {
               type="name"
               name="title"
               required
-              placeholder="Enter Title Name"
+              placeholder={loadedData.title}
               className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
             />
           </div>
@@ -74,7 +90,7 @@ const UpdateArticle = () => {
 
         <div className="md:flex items-center gap-4 mb-4">
           <div className="w-1/2">
-            <label className="block mb text-sm">Title</label>
+            <label className="block mb text-sm">Tags</label>
             <div className="mt-2">
               <Select
                 components={animatedComponents}
@@ -92,7 +108,7 @@ const UpdateArticle = () => {
                 type="name"
                 name="publisher"
                 required
-                placeholder="Enter Publisher name"
+                placeholder={loadedData.publisher}
                 className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
               />
             </div>
@@ -106,7 +122,7 @@ const UpdateArticle = () => {
               type="name"
               name="description"
               required
-              placeholder="Enter Description"
+              placeholder={loadedData.description}
               className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
             />
           </div>

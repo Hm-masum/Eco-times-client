@@ -14,6 +14,7 @@ import DashboardLayOut from "../Layouts/DashboardLayOut";
 import AllArticles from "../Pages/DashBoard/AllArticles";
 import AllUser from "../Pages/DashBoard/AllUser";
 import AddPublisher from "../Pages/DashBoard/AddPublisher";
+import UpdateArticle from "../Pages/UpdateArticle/UpdateArticle";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
       {
         path: "/allArticle",
         element: <AllArticle></AllArticle>,
+      },
+      {
+        path: "/update/:id",
+        element:<UpdateArticle></UpdateArticle>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/article/${params.id}`),
       },
     ],
   },

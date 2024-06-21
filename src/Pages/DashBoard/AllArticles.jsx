@@ -3,17 +3,76 @@ import LoadingSpinner from "../../Components/LoadingSpinner";
 import SmallButton from "../../Components/SmallButton";
 import { Avatar } from "flowbite-react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AllArticles = () => {
   const axiosSecure=useAxiosSecure()
 
-  const { data: articles = [], isLoading } = useQuery({
+  const { data: articles = [], isLoading,refetch } = useQuery({
     queryKey: ["all-articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/article`);
       return data;
     },
   });
+
+  const handleDelete = (article) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axiosSecure.delete(`/article/${article._id}`)
+            .then(res => {
+                if(res.data.deletedCount>0){
+                    refetch();
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Article has been deleted.",
+                    icon: "success"
+                   });
+                }
+            })
+        }
+    });
+  }
+
+  const handleDecline = (article)=>{
+    console.log('.....')
+  }
+
+  const handlePremium = (article)=>{
+    axiosSecure.patch(`/article/premium/${article._id}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          icon: "success",
+          title: `${article.title} is premium now`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  }
+
+  const handleApprove = (article)=>{
+    axiosSecure.patch(`/article/approve/${article._id}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          icon: "success",
+          title: `${article.title} is approve now`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  }
 
   if (isLoading) return <LoadingSpinner />
 
@@ -122,16 +181,16 @@ const AllArticles = () => {
                       <p className="text-gray-900 whitespace-no-wrap">{article.publisher}</p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"approve"}/></button></p>
+                      <button onClick={() => handleApprove(article)}><SmallButton value={"approve"}/></button>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"Decline"}/></button></p>
+                      <button onClick={() => handleDecline(article)}><SmallButton value={"Decline"}/></button>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"Delete"}/></button></p>
+                      <button onClick={() => handleDelete(article)}><SmallButton value={"Delete"}/></button>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><button><SmallButton value={"Premium"}/></button></p>
+                      <button onClick={() => handlePremium(article)}><SmallButton value={"Premium"}/></button>
                     </td>
                   </tr>)
                 }

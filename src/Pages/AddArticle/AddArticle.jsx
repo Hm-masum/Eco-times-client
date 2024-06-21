@@ -95,7 +95,7 @@ const AddArticle = () => {
 
         <div className="md:flex items-center gap-4 mb-4">
           <div className="w-1/2">
-            <label className="block mb text-sm">Title</label>
+            <label className="block mb text-sm">Tags</label>
             <div className="mt-2">
               <Select
                 components={animatedComponents}
