@@ -1,29 +1,47 @@
 import { FileInput, Label } from "flowbite-react";
 import { imageUpload } from "../../utils/ImgBB_api";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useMutation } from "@tanstack/react-query";
 
 const AddPublisher = () => {
+  const [loading, setLoading] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
-    const handleAddPublisher = async (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const publisher = form.publisher.value;
-        const image = form.image.files[0];
-    
-        try {
-          const image_url = await imageUpload(image);
-          const publisherData = {
-            publisher,
-            image: image_url,
-          };
-          console.log(publisherData);
-    
-          //  Todo Post request to server
-        } catch (err) {
-          console.log(err);
-          toast.error(err.message);
-        }
+  const { mutateAsync } = useMutation({
+    mutationFn: async (publisherData) => {
+      const { data } = await axiosSecure.post(`/publisher`, publisherData);
+      return data;
+    },
+    onSuccess: () => {
+      console.log("Data Saved Successfully");
+      toast.success("Publisher Added Successfully!");
+      setLoading(false);
+    },
+  });
+
+  const handleAddPublisher = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const publisher = form.publisher.value;
+    const image = form.image.files[0];
+
+    try {
+      const image_url = await imageUpload(image);
+      const publisherData = {
+        publisher,
+        image: image_url,
       };
+      console.log(publisherData);
+
+      //  Todo Post request to server
+      await mutateAsync(publisherData);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  };
 
   return (
     <div>
@@ -54,6 +72,7 @@ const AddPublisher = () => {
           <div>
             <button
               type="submit"
+              disabled={loading}
               className="bg-purple-700 font-semibold w-full rounded-md text-center py-3 text-white"
             >
               Add Publisher

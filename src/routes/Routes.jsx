@@ -15,6 +15,8 @@ import AllArticles from "../Pages/DashBoard/AllArticles";
 import AllUser from "../Pages/DashBoard/AllUser";
 import AddPublisher from "../Pages/DashBoard/AddPublisher";
 import UpdateArticle from "../Pages/UpdateArticle/UpdateArticle";
+import Statistics from "../Pages/DashBoard/Statistics";
+import Payment from "../Pages/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +68,10 @@ const router = createBrowserRouter([
         element:<UpdateArticle></UpdateArticle>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/article/${params.id}`),
       },
+      {
+        path: 'payment',
+        element:<Payment></Payment>
+      },
     ],
   },
   {
@@ -74,7 +80,7 @@ const router = createBrowserRouter([
     children:[
       {
         index:true,
-        element:<AllUser></AllUser>
+        element:<Statistics></Statistics>
       },
       {
         path: "all-users",
