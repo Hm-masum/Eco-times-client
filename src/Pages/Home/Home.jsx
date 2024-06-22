@@ -1,5 +1,6 @@
 import Carosel from "./Carosel";
 import Plans from "./Plans";
+import Publishers from "./Publishers";
 
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
         <div>
             <Carosel></Carosel>
             <Plans></Plans>
+            <Publishers></Publishers>
         </div>
     );
 };

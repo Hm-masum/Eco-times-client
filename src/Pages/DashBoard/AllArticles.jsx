@@ -4,11 +4,18 @@ import SmallButton from "../../Components/SmallButton";
 import { Avatar } from "flowbite-react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import Modal from "react-modal";
 
 const AllArticles = () => {
-  const axiosSecure=useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
+  const [visible, setVisible] = useState(false);
 
-  const { data: articles = [], isLoading,refetch } = useQuery({
+  const {
+    data: articles = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["all-articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/article`);
@@ -18,35 +25,34 @@ const AllArticles = () => {
 
   const handleDelete = (article) => {
     Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-            axiosSecure.delete(`/article/${article._id}`)
-            .then(res => {
-                if(res.data.deletedCount>0){
-                    refetch();
-                  Swal.fire({
-                    title: "Deleted!",
-                    text: "Article has been deleted.",
-                    icon: "success"
-                   });
-                }
-            })
-        }
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/article/${article._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Article has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
     });
-  }
+  };
 
-  const handleDecline = (article)=>{
-    console.log('.....')
-  }
+  const handleDecline = (article) => {
+    console.log(".....");
+  };
 
-  const handlePremium = (article)=>{
+  const handlePremium = (article) => {
     axiosSecure.patch(`/article/premium/${article._id}`).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
@@ -58,9 +64,9 @@ const AllArticles = () => {
         });
       }
     });
-  }
+  };
 
-  const handleApprove = (article)=>{
+  const handleApprove = (article) => {
     axiosSecure.patch(`/article/approve/${article._id}`).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
@@ -72,10 +78,9 @@ const AllArticles = () => {
         });
       }
     });
-  }
+  };
 
-  if (isLoading) return <LoadingSpinner />
-
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div>
@@ -155,49 +160,79 @@ const AllArticles = () => {
               </thead>
               <tbody>
                 {/* Room row data */}
-                {
-                  articles.map(article => <tr key={article._id}>
+                {articles.map((article) => (
+                  <tr key={article._id}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                       <div className="flex flex-wrap gap-2">
-                         <Avatar img={article.authorPhoto} rounded />
+                      <div className="flex flex-wrap gap-2">
+                        <Avatar img={article.authorPhoto} rounded />
                       </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">{article.authorName}</p>
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {article.authorName}
+                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">{article.authorEmail}</p>
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {article.authorEmail}
+                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">{article.title.slice(0,10)}</p>
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {article.title.slice(0, 10)}
+                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">{article.postedDate}</p>
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {article.postedDate}
+                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">{article.status}</p>
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {article.status}
+                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">{article.publisher}</p>
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {article.publisher}
+                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button onClick={() => handleApprove(article)}><SmallButton value={"approve"}/></button>
+                      {article.status === "approved" ? (
+                        <p>approved</p>
+                      ) : (
+                        <button onClick={() => handleApprove(article)}>
+                          <SmallButton value={"approve"} />
+                        </button>
+                      )}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button onClick={() => handleDecline(article)}><SmallButton value={"Decline"}/></button>
+                      <button onClick={() => handleDecline(article)}>
+                        <SmallButton value={"Decline"} />
+                      </button>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button onClick={() => handleDelete(article)}><SmallButton value={"Delete"}/></button>
+                      <button onClick={() => handleDelete(article)}>
+                        <SmallButton value={"Delete"} />
+                      </button>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button onClick={() => handlePremium(article)}><SmallButton value={"Premium"}/></button>
+                      {article.status === "premium" ? (
+                        <p>Premium</p>
+                      ) : (
+                        <button onClick={() => handlePremium(article)}>
+                          <SmallButton value={"approve"} />
+                        </button>
+                      )}
                     </td>
-                  </tr>)
-                }
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
+
+        
       </div>
     </div>
   );

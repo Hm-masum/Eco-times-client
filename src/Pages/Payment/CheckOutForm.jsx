@@ -1,7 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./CheckOutForm.css";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { useEffect, useState } from "react";
 import ButtonComp from "../../Components/ButtonComp";
@@ -11,26 +10,25 @@ const CheckOutForm = ({ price }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
-  const [transactionId,setTransactionId]= useState('')
+  const [transactionId, setTransactionId] = useState("");
   const { user } = useAuth();
   const [clientSecret, setClientSecret] = useState();
   const [cardError, setCardError] = useState("");
   const [processing, setProcessing] = useState(false);
 
-  useEffect(()=>{
-    if(price>0){
-      axiosSecure.post('/create-payment-intent',{price:price})
-      .then(res => {
-        console.log(res.data)
-        setClientSecret(res.data.clientSecret)
-      })
+  useEffect(() => {
+    if (price > 0) {
+      axiosSecure
+        .post("/create-payment-intent", { price: price })
+        .then((res) => {
+          setClientSecret(res.data.clientSecret);
+        });
     }
- },[axiosSecure,price])
+  }, [axiosSecure, price]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    
     setProcessing(true);
     if (!stripe || !elements) {
       return;
@@ -76,9 +74,8 @@ const CheckOutForm = ({ price }) => {
     }
 
     if (paymentIntent.status === "succeeded") {
-      setTransactionId(paymentIntent.id)
+      setTransactionId(paymentIntent.id);
       console.log(paymentIntent);
-     
 
       // 1. Create payment info object
       const paymentInfo = {
@@ -92,8 +89,8 @@ const CheckOutForm = ({ price }) => {
       console.log(paymentInfo);
 
       try {
-        const res=await axiosSecure.patch(`/users/premium/${user?.email}`)
-        console.log(res)
+        const res = await axiosSecure.patch(`/users/premium/${user?.email}`);
+        console.log(res);
 
         if (res.data.modifiedCount > 0) {
           Swal.fire({
@@ -103,7 +100,6 @@ const CheckOutForm = ({ price }) => {
             timer: 1500,
           });
         }
-
       } catch (err) {
         console.log(err);
       }
@@ -113,11 +109,7 @@ const CheckOutForm = ({ price }) => {
   };
 
   return (
-    <div className="my-12 ">
-      <h2 className="text-3xl mb-8 text-center font-semibold">
-        Payment Please!
-      </h2>
-
+    <div className="my-10">
       <form onSubmit={handleSubmit}>
         <CardElement
           options={{
@@ -136,12 +128,19 @@ const CheckOutForm = ({ price }) => {
           }}
         />
 
-        <button disabled={!stripe || !clientSecret || processing} type="submit">
-          <ButtonComp value={"payment"}></ButtonComp>
-        </button>
+        <div className="flex justify-center my-4">
+          <button
+            disabled={!stripe || !clientSecret || processing}
+            type="submit"
+          >
+            <ButtonComp value={"payment"}></ButtonComp>
+          </button>
+        </div>
       </form>
       {cardError && <p className="text-red-600 ml-8">{cardError}</p>}
-      {transactionId && <p className="text-green-600">Your Transaction id:{transactionId}</p>}
+      {transactionId && (
+        <p className="text-green-600">Your Transaction id:{transactionId}</p>
+      )}
     </div>
   );
 };

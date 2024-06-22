@@ -18,10 +18,10 @@ const Slide = ({ image, text }) => {
           </h1>
           <br />
           <Link
-            to={"/"}
+            to={"/subscription"}
             className="bg-purple-700 font-semibold rounded-md text-center px-5 py-3 text-white"
           >
-             Details
+             Subscribe
           </Link>
         </div>
       </div>

@@ -17,6 +17,8 @@ import AddPublisher from "../Pages/DashBoard/AddPublisher";
 import UpdateArticle from "../Pages/UpdateArticle/UpdateArticle";
 import Statistics from "../Pages/DashBoard/Statistics";
 import Payment from "../Pages/Payment/Payment";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -80,11 +82,11 @@ const router = createBrowserRouter([
     children:[
       {
         index:true,
-        element:<Statistics></Statistics>
+        element:<PrivateRoute><AdminRoute><Statistics></Statistics></AdminRoute></PrivateRoute>
       },
       {
         path: "all-users",
-        element:<AllUser></AllUser>
+        element:<PrivateRoute><AdminRoute><AllUser></AllUser></AdminRoute></PrivateRoute>
       },
       {
         path: "all-articles",
