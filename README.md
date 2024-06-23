@@ -1,8 +1,12 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+************ECO TIMES************
+1.react router dom                                                                     
+2.tailwindCSS                                                                                                       
+3.flowBite react                                                      
+4.react icon                                                         
+5.react hot toast                                                                       
+6.sweet alert2                                                                         
+7.firebase                                                              
+8.react select                                                                
+7.swiper                                                                 
+8.axios                                                                   
+9.tanstackQuery                                                                                                 
