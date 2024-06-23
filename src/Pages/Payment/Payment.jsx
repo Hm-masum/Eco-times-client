@@ -18,7 +18,7 @@ const Payment = () => {
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
-    console.log(selectedOption)
+    //console.log(selectedOption)
   };
 
   const handleButton= () => {

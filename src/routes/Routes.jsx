@@ -39,11 +39,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/addArticle",
-        element: <AddArticle></AddArticle>,
+        element: <PrivateRoute><AddArticle></AddArticle></PrivateRoute>,
       },
       {
         path: "/article/:id",
-        element: <ArticleDetails></ArticleDetails>,
+        element: <PrivateRoute><ArticleDetails></ArticleDetails></PrivateRoute>,
       },
       {
         path: "/subscription",
@@ -51,15 +51,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/myProfile",
-        element: <MyProfile></MyProfile>,
+        element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>,
       },
       {
         path: "/myArticle",
-        element: <MyArticle></MyArticle>,
+        element: <PrivateRoute><MyArticle></MyArticle></PrivateRoute>,
       },
       {
         path: "/premiumArticle",
-        element: <PremiumArticle></PremiumArticle>,
+        element: <PrivateRoute><PremiumArticle></PremiumArticle></PrivateRoute>,
       },
       {
         path: "/allArticle",
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/update/:id",
-        element:<UpdateArticle></UpdateArticle>,
+        element:<PrivateRoute><UpdateArticle></UpdateArticle></PrivateRoute>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/article/${params.id}`),
       },
       {
@@ -90,11 +90,11 @@ const router = createBrowserRouter([
       },
       {
         path: "all-articles",
-        element:<AllArticles></AllArticles>
+        element:<PrivateRoute><AdminRoute><AllArticles></AllArticles></AdminRoute></PrivateRoute>
       },
       {
         path: "add-publisher",
-        element:<AddPublisher></AddPublisher>
+        element:<PrivateRoute><AdminRoute><AddPublisher></AddPublisher></AdminRoute></PrivateRoute>
       },
 
     ]

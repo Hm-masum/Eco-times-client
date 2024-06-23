@@ -23,7 +23,7 @@ export default function Carosel() {
       return data;
     },
   });
-  console.log(articles.length)
+  
 
 
   return (

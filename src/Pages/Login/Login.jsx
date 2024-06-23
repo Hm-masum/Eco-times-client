@@ -28,7 +28,7 @@ const Login = () => {
       toast.success('sign in successful')
     }
     catch(err){
-      console.log(err)
+      // console.log(err)
       toast.error('sign in not successful')
       setLoading(false)
     }
@@ -51,7 +51,7 @@ const Login = () => {
       toast.success('sign up successful')
     }
     catch(err){
-      console.log(err)
+      // console.log(err)
       toast.error('sign up not successful')
     }
   }
@@ -73,7 +73,7 @@ const Login = () => {
       toast.success('sign up successful')
     }
     catch(err){
-      console.log(err)
+      // console.log(err)
       toast.error('sign up not successful')
     }
   }

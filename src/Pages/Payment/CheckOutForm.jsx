@@ -45,7 +45,7 @@ const CheckOutForm = ({ price }) => {
     });
 
     if (error) {
-      console.log("[error]", error);
+      // console.log("[error]", error);
       setCardError(error.message);
       setProcessing(false);
       return;
@@ -67,7 +67,7 @@ const CheckOutForm = ({ price }) => {
       });
 
     if (confirmError) {
-      console.log(confirmError);
+      // console.log(confirmError);
       setCardError(confirmError.message);
       setProcessing(false);
       return;
@@ -75,7 +75,7 @@ const CheckOutForm = ({ price }) => {
 
     if (paymentIntent.status === "succeeded") {
       setTransactionId(paymentIntent.id);
-      console.log(paymentIntent);
+      // console.log(paymentIntent);
 
       // 1. Create payment info object
       const paymentInfo = {
@@ -86,11 +86,11 @@ const CheckOutForm = ({ price }) => {
         date: new Date(),
       };
 
-      console.log(paymentInfo);
+      //console.log(paymentInfo);
 
       try {
         const res = await axiosSecure.patch(`/users/premium/${user?.email}`);
-        console.log(res);
+        //console.log(res);
 
         if (res.data.modifiedCount > 0) {
           Swal.fire({

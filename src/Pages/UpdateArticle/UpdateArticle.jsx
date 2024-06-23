@@ -20,7 +20,7 @@ const UpdateArticle = () => {
         return data
       },
       onSuccess: () => {
-        console.log('Data Saved Successfully')
+        //console.log('Data Saved Successfully')
         toast.success('Article updated Successfully!')
         setLoading(false)
       },
@@ -46,14 +46,14 @@ const UpdateArticle = () => {
             tags,
             image: image_url,
           };
-          console.log(articleData);
+          //console.log(articleData);
     
           //Post request to server
           await mutateAsync(articleData)
     
         } catch (err) {
           setLoading(false)
-          console.log(err);
+          //console.log(err);
           toast.error(err.message);
         }
       };

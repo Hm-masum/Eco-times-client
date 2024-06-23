@@ -22,13 +22,30 @@ const Register = () => {
     const password = form.password.value;
     const image = form.image.files[0];
 
+    if (password.length < 6) {
+      toast.error("password should be 6 character")
+      return;
+    }
+    else if (!/[A-Z]/.test(password)) {
+      toast.error("Your password should have at least 1 Uppercase character")
+      return;
+    }
+    else if (!/[a-z]/.test(password)) {
+      toast.error("Your password should have at least 1 Lowercase character")
+      return;
+    }
+    else if (!/[!@#$%^&*().?":{}|<>]/.test(password)) {
+      toast.error("Your password should have at least 1 special character")
+      return;
+    }
+
     try {
       setLoading(true);
       const image_url = await imageUpload(image);
 
       // sign up
       const result = await createUser(email, password);
-      console.log(result);
+      //console.log(result);
 
       // save username and photo
       await updateUserProfile(name, image_url);
@@ -45,7 +62,7 @@ const Register = () => {
       navigate("/");
       toast.success("sign up successful");
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       toast.error("sign up not successful");
       setLoading(false);
     }

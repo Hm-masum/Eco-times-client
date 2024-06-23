@@ -11,7 +11,7 @@ const AllArticle = () => {
   const [searchText, setSearchText] = useState("");
   const [role, ] = useRole()
 
-  const { data: articles = [], isLoading,refetch } = useQuery({
+  const { data: allArticles = [], isLoading,refetch } = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
       const { data } = await axiosCommon.get(`/all-articles?search=${search}`);
@@ -24,6 +24,9 @@ const AllArticle = () => {
     setSearch(searchText);
     refetch()
   };
+
+  const articles=allArticles.filter(item=>item.status==='approved' || item.status==='premium')
+
 
 
   if (isLoading) return <LoadingSpinner />;
