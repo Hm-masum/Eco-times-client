@@ -5,11 +5,13 @@ import { Avatar } from "flowbite-react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import Modal from "react-modal";
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 
 const AllArticles = () => {
   const axiosSecure = useAxiosSecure();
-  const [visible, setVisible] = useState(false);
+  let [isOpen, setIsOpen] = useState(false)
+  let [value, setValue] = useState([])
+
 
   const {
     data: articles = [],
@@ -48,8 +50,23 @@ const AllArticles = () => {
     });
   };
 
-  const handleDecline = (article) => {
-    console.log(".....");
+  const handleDecline = (e) => {
+    e.preventDefault();
+    const form=e.target;
+    const decMessage=form.decMessage.value
+    console.log(decMessage);
+    axiosSecure.patch(`/article/decline/${value._id}`,{message:decMessage}).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          icon: "success",
+          title: `${value.title} is declined now`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+
   };
 
   const handlePremium = (article) => {
@@ -207,9 +224,14 @@ const AllArticles = () => {
                       )}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button onClick={() => handleDecline(article)}>
-                        <SmallButton value={"Decline"} />
-                      </button>
+                      {
+                        article.status === "decline" ? <p>decline</p> :
+                        <>
+                           <button onClick={() => { setValue(article); setIsOpen(true); }}>
+                              <SmallButton value={"Decline"} />
+                           </button>
+                        </>
+                      }
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <button onClick={() => handleDelete(article)}>
@@ -221,7 +243,7 @@ const AllArticles = () => {
                         <p>Premium</p>
                       ) : (
                         <button onClick={() => handlePremium(article)}>
-                          <SmallButton value={"approve"} />
+                          <SmallButton value={"premium"} />
                         </button>
                       )}
                     </td>
@@ -231,6 +253,32 @@ const AllArticles = () => {
             </table>
           </div>
         </div>
+          
+
+      
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+          <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+            <DialogTitle className="font-bold">Enter decline reason..</DialogTitle>
+
+            <form onSubmit={handleDecline} className="space-y-4">
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="decMessage"
+                  required
+                  placeholder="Please write"
+                  className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                />
+              </div>
+               <div className="flex gap-4">
+                 <button onClick={() => setIsOpen(false)}><SmallButton value={"cancel"}/></button>
+                 <button type="submit"><SmallButton value={"Decline"}/></button>
+               </div>   
+            </form>
+          </DialogPanel>
+        </div>
+      </Dialog>
 
         
       </div>

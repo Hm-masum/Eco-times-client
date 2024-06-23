@@ -5,10 +5,13 @@ import LoadingSpinner from "../../Components/LoadingSpinner";
 import SmallButton from "../../Components/SmallButton";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import { Tooltip } from "flowbite-react";
 
 const MyArticle = () => {
   const axiosSecure=useAxiosSecure();
   const {user}=useAuth()
+  let [isOpen, setIsOpen] = useState(false)
 
   const { data: articles = [], isLoading , refetch } = useQuery({
     queryKey: ["my-articles"],
@@ -111,7 +114,14 @@ const MyArticle = () => {
                       <p className="text-gray-900 whitespace-no-wrap">{article.title}</p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">{article.status}</p>
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {article.status==='decline' ? <>
+                          <Tooltip content={article.decMessage}>
+                              <p>Declined</p>
+                          </Tooltip>
+                        </>      
+                        :<p>{article.status}</p>}
+                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">{article.isPremium}</p>

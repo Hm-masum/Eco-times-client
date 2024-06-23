@@ -31,7 +31,7 @@ const Payment = () => {
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+          confirmButtonText: "Yes, confirm it!",
         }).then((result) => {
           if (result.isConfirmed) {
             const res = axiosSecure.patch(`/users/premium/${user?.email}`);
@@ -59,13 +59,13 @@ const Payment = () => {
 
   return (
     <div>
-      <h2 className="text-3xl mb-8 text-center font-semibold">
+      <h2 className="text-3xl mb-5 text-center font-semibold">
         Payment Please!
       </h2>
       <div className="flex items-center justify-center"><button onClick={handleButton}><ButtonComp value={"For testing"}></ButtonComp></button></div>
 
       <form>
-        <div className="max-w-md mt-5 mx-auto">
+        <div className="max-w-md mt-10 mx-auto">
           <Select onBlur={handleChange} id="countries" required>
             <option value="2">$100 / 5days</option>
             <option value="3">$150 / 10days</option>

@@ -16,7 +16,7 @@ const Subscription = () => {
           </h1>
           <p className="lg:w-[45%] text-black font-semibold">
             Embark on a journey to excellence with our professional program.
-            Elevate your game and make your mark in the world of elite hockey.
+            Elevate your knowledge and make your mark in the world of news.
           </p>
 
           <button type="submit">
