@@ -1,4 +1,4 @@
-************ECO TIMES************
+************ECO TIMES************                                                                               
 1.react router dom                                                                     
 2.tailwindCSS                                                                                                       
 3.flowBite react                                                      
@@ -10,3 +10,5 @@
 7.swiper                                                                 
 8.axios                                                                   
 9.tanstackQuery                                                                                                 
+
+live link: https://eco-times.web.app/
