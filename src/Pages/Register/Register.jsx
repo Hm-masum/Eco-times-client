@@ -62,7 +62,6 @@ const Register = () => {
       navigate("/");
       toast.success("sign up successful");
     } catch (err) {
-      //console.log(err);
       toast.error("sign up not successful");
       setLoading(false);
     }

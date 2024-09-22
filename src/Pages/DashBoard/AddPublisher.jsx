@@ -46,7 +46,7 @@ const AddPublisher = () => {
   return (
     <div>
       <div className="border-2 rounded-xl p-4 md:p-10">
-        <h2 className="text-3xl mb-8 text-center font-semibold">Add Article</h2>
+        <h2 className="text-3xl mb-8 text-center font-semibold">Add Publisher</h2>
 
         <form onSubmit={handleAddPublisher}>
           <div className="mb-4">

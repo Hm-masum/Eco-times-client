@@ -23,7 +23,7 @@ const Publishers = () => {
                 {
                     publishers.map(publisher => <div key={publisher.id}>
                         <div>
-                          <div className="border p-3 rounded-xl"><img className="w-[200px] h-[200px]" src={publisher.image} alt="" /></div>
+                          <div className="border p-3 flex items-center justify-center rounded-xl"><img className="w-[200px] h-[200px]" src={publisher.image} alt="" /></div>
                           <h2 className="text-3xl font-semibold text-center">{publisher.publisher}</h2>
                         </div>
                     </div>)
