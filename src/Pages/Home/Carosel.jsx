@@ -16,7 +16,7 @@ export default function Carosel() {
   const axiosCommon=useAxiosCommon()
 
 
-  const { data: articles = [], isLoading,refetch } = useQuery({
+  const { data: articles = [] } = useQuery({
     queryKey: ["articles-slider"],
     queryFn: async () => {
       const { data } = await axiosCommon.get(`/article`);

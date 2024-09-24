@@ -7,12 +7,15 @@ import makeAnimated from 'react-select/animated';
 import useAuth from "../../Hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAllPublisher from "../../Hooks/useAllPublisher";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const AddArticle = () => {
   const [selectedOption, setSelectedOption] = useState([]);
   const {user}=useAuth();
   const [loading, setLoading] = useState(false)
   const axiosSecure=useAxiosSecure()
+  const [publishers,isLoading] = useAllPublisher()
 
   const { mutateAsync } = useMutation({
     mutationFn: async articleData => {
@@ -20,11 +23,12 @@ const AddArticle = () => {
       return data
     },
     onSuccess: () => {
-      console.log('Data Saved Successfully')
       toast.success('Article Added Successfully!')
       setLoading(false)
     },
   })
+
+  console.log(publishers)
 
   const handleAddArticle = async (e) => {
     e.preventDefault();
@@ -52,18 +56,13 @@ const AddArticle = () => {
         isPremium:'no',
         status:'pending',
       };
-      console.log(articleData);
-
-      //Post request to server
       await mutateAsync(articleData)
 
     } catch (err) {
       setLoading(false)
-      console.log(err);
       toast.error(err.message);
     }
   };
-
 
   const animatedComponents = makeAnimated();
   const options = [
@@ -74,6 +73,8 @@ const AddArticle = () => {
     { value: "education", label: "Education" },
     { value: "international", label: "International" },
   ];
+
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <div className="border-2 rounded-xl p-4 md:p-10">
@@ -106,16 +107,17 @@ const AddArticle = () => {
               />
             </div>
           </div>
+
           <div className="w-1/2">
             <label className="block mb text-sm">Publisher</label>
             <div className="mt-2">
-              <input
-                type="name"
-                name="publisher"
-                required
-                placeholder="Enter Publisher name"
-                className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
-              />
+              <select name="publisher" className="w-full p-3 border rounded-md border-gray-400 text-gray-900">
+                {
+                  publishers?.map(item =>
+                    <option value={item?.publisher} key={item?._id}>{item?.publisher}</option>
+                  )
+                }
+              </select>
             </div>
           </div>
         </div>

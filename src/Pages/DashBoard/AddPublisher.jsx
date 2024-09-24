@@ -15,7 +15,6 @@ const AddPublisher = () => {
       return data;
     },
     onSuccess: () => {
-      console.log("Data Saved Successfully");
       toast.success("Publisher Added Successfully!");
       setLoading(false);
     },
@@ -35,7 +34,6 @@ const AddPublisher = () => {
       };
       console.log(publisherData);
 
-      //  Todo Post request to server
       await mutateAsync(publisherData);
     } catch (err) {
       console.log(err);
@@ -44,8 +42,8 @@ const AddPublisher = () => {
   };
 
   return (
-    <div>
-      <div className="border-2 rounded-xl p-4 md:p-10">
+    <div className="flex justify-center py-12 md:py-0 rounded-lg md:min-h-screen bg-gray-100 items-center">
+      <div className="md:w-[50%] p-6 bg-white rounded-xl shadow">
         <h2 className="text-3xl mb-8 text-center font-semibold">Add Publisher</h2>
 
         <form onSubmit={handleAddPublisher}>

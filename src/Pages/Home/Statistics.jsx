@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import LoadingSpinner from "../../Components/LoadingSpinner";
+import SectionTitle from "../../Components/SectionTitle";
 
 const Statistics = () => {
     const axiosCommon=useAxiosCommon()
@@ -26,9 +27,10 @@ const Statistics = () => {
 
     return (
         <div className="my-14">
-          <h2 className="text-3xl mb-5 text-center font-semibold">Statistics</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="border rounded-lg p-4 flex items-center justify-center gap-5">
+          <SectionTitle title={"Statistics"} body={"Explore the statistics to our valuable user, premium user. if you want to explore this please subscribe."}></SectionTitle>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4">
+            <div className="border-2 border-purple-200 rounded-lg p-4 flex items-center justify-center gap-5">
                 <div>
                     <p>Total user.</p>
                     <p className="text-5xl font-semibold">{users.length}</p>
@@ -36,7 +38,8 @@ const Statistics = () => {
                 </div>
                 <div><FaUsers className="text-6xl text-orange-500"/></div>
             </div>
-            <div className="border rounded-lg p-4 flex items-center justify-center gap-5">
+
+            <div className="border-2 border-purple-200 rounded-lg p-4 flex items-center justify-center gap-5">
                 <div>
                     <p>Premium user.</p>
                     <p className="text-5xl font-semibold">{premiumUser.length}</p>
@@ -44,7 +47,8 @@ const Statistics = () => {
                 </div>
                 <div><MdOutlineWorkspacePremium  className="text-6xl text-orange-500"/></div>
             </div>
-            <div className="border rounded-lg p-4 flex items-center justify-center gap-5">
+
+            <div className="border-2 border-purple-200 rounded-lg p-4 flex items-center justify-center gap-5">
                 <div>
                     <p>Normal user.</p>
                     <p className="text-5xl font-semibold">{normalUser.length}</p>
@@ -52,7 +56,6 @@ const Statistics = () => {
                 </div>
                 <div><HiMiniUserGroup  className="text-6xl text-orange-500"/></div>
             </div>
-            
           </div>
         </div>
     );

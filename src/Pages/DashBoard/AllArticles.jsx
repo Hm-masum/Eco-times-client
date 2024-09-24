@@ -6,6 +6,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { NavLink } from "react-router-dom";
 
 const AllArticles = () => {
   const axiosSecure = useAxiosSecure();
@@ -125,17 +126,18 @@ const AllArticles = () => {
                   >
                     Author Email
                   </th>
+                  
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Title
+                    publisher
                   </th>
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Posted date
+                    Details
                   </th>
                   <th
                     scope="col"
@@ -147,13 +149,13 @@ const AllArticles = () => {
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    publisher
+                    Approve
                   </th>
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Approve
+                    Premium
                   </th>
                   <th
                     scope="col"
@@ -167,12 +169,6 @@ const AllArticles = () => {
                   >
                     Delete
                   </th>
-                  <th
-                    scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                  >
-                    Premium
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -181,7 +177,7 @@ const AllArticles = () => {
                   <tr key={article._id}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <div className="flex flex-wrap gap-2">
-                        <Avatar img={article.authorPhoto} rounded />
+                        <Avatar img={article.authorPhoto} rounded bordered/>
                       </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -196,22 +192,17 @@ const AllArticles = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
-                        {article.title.slice(0, 10)}
+                        {article.publisher}
                       </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {article.postedDate}
-                      </p>
+                      <NavLink to={`/article/${article._id}`}>
+                          <SmallButton value={"Details"} />
+                      </NavLink>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
                         {article.status}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {article.publisher}
                       </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -220,6 +211,15 @@ const AllArticles = () => {
                       ) : (
                         <button onClick={() => handleApprove(article)}>
                           <SmallButton value={"approve"} />
+                        </button>
+                      )}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      {article.isPremium === "yes" ? (
+                        <p>Premium</p>
+                      ) : (
+                        <button onClick={() => handlePremium(article)}>
+                          <SmallButton value={"premium"} />
                         </button>
                       )}
                     </td>
@@ -238,15 +238,6 @@ const AllArticles = () => {
                         <SmallButton value={"Delete"} />
                       </button>
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      {article.status === "premium" ? (
-                        <p>Premium</p>
-                      ) : (
-                        <button onClick={() => handlePremium(article)}>
-                          <SmallButton value={"premium"} />
-                        </button>
-                      )}
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -261,17 +252,17 @@ const AllArticles = () => {
           <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
             <DialogTitle className="font-bold">Enter decline reason..</DialogTitle>
 
-            <form onSubmit={handleDecline} className="space-y-4">
+            <form onSubmit={handleDecline} className="space-y-3">
               <div className="mt-2">
-                <input
+                <textarea
                   type="text"
                   name="decMessage"
                   required
                   placeholder="Please write"
-                  className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                  className="w-full rounded-md text-gray-900"
                 />
               </div>
-               <div className="flex gap-4">
+               <div className="flex gap-4 justify-center">
                  <button onClick={() => setIsOpen(false)}><SmallButton value={"cancel"}/></button>
                  <button type="submit"><SmallButton value={"Decline"}/></button>
                </div>   

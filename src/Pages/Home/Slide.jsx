@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import ButtonComp from "../../Components/ButtonComp";
 
 const Slide = ({ image, text }) => {
   return (

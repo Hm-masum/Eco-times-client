@@ -8,11 +8,7 @@ import { Avatar } from "flowbite-react";
 const AllUser = () => {
   const axiosSecure = useAxiosSecure();
 
-  const {
-    data: users = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: users = [],isLoading,refetch} = useQuery({
     queryKey: ["all-users"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/users`);
@@ -30,6 +26,31 @@ const AllUser = () => {
           title: `${user.name} is an admin now`,
           showConfirmButton: false,
           timer: 1500,
+        });
+      }
+    });
+  };
+
+  const handleDelete = (user) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/user/${user._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "User has been deleted.",
+              icon: "success",
+            });
+          }
         });
       }
     });
@@ -75,6 +96,12 @@ const AllUser = () => {
                   >
                     Make Admin
                   </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                  >
+                    Delete
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -83,12 +110,12 @@ const AllUser = () => {
                   <tr key={user._id}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
-                        {index}
+                        {index+1}
                       </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <div className="flex flex-wrap gap-2">
-                         <Avatar img={user.image_url} rounded />
+                         <Avatar img={user.image_url} rounded bordered/>
                       </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -109,6 +136,11 @@ const AllUser = () => {
                           <SmallButton value={"admin"}></SmallButton>
                         </button>
                       )}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <button onClick={() => handleDelete(user)}>
+                        <SmallButton value={"Delete"} />
+                      </button>
                     </td>
                   </tr>
                 ))}

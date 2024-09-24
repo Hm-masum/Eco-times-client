@@ -1,11 +1,14 @@
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import SectionTitle from "../../Components/SectionTitle";
 
 const Plans = () => {
   return (
     <div>
-      <div className="flex py-10 flex-col md:flex-row items-center justify-center gap-4">
-        <div className="border rounded-xl md:w-1/3 space-y-24 p-4">
+      <SectionTitle title={'Subscription'} body={'Unlock a World of Insights with Our Exclusive Subscription. Fresh, Engaging, and Tailored – Your Interests, Our Content'}></SectionTitle>
+
+      <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+        <div className="border border-purple-300 rounded-xl md:w-1/3 space-y-24 p-5">
           <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Normal user</h2>
             <div>
@@ -47,7 +50,7 @@ const Plans = () => {
           </div>
         </div>
 
-        <div className="border rounded-xl md:w-1/3 space-y-24 p-4">
+        <div className="border border-purple-300 rounded-xl md:w-1/3 space-y-24 p-5">
           <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Premium user</h2>
             <div>
@@ -89,7 +92,7 @@ const Plans = () => {
           </div>
         </div>
 
-        <div className="border rounded-xl md:w-1/3 space-y-24 p-4">
+        <div className="border border-purple-300 rounded-xl md:w-1/3 space-y-24 p-5">
           <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Premium user</h2>
             <div>
