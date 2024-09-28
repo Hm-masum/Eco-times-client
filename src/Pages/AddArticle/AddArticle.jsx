@@ -77,81 +77,83 @@ const AddArticle = () => {
   if (isLoading) return <LoadingSpinner />
 
   return (
-    <div className="border-2 rounded-xl p-4 md:p-10">
-      <h2 className="text-3xl mb-8 text-center font-semibold">Add Article</h2>
+    <div className="flex justify-center rounded-lg p-4 md:p-12 bg-gray-100 items-center">
+      <div className="w-full p-10 bg-white rounded-xl shadow">
+          <h2 className="text-3xl md:text-4xl mb-5 text-center font-semibold">Add Article</h2>
 
-      <form onSubmit={handleAddArticle}>
-        <div className="mb-4">
-          <label className="block mb text-sm">Title</label>
-          <div className="mt-2">
-            <input
-              type="name"
-              name="title"
-              required
-              placeholder="Enter Title Name"
-              className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
-            />
-          </div>
-        </div>
-
-        <div className="md:flex items-center gap-4 mb-4">
-          <div className="w-1/2">
-            <label className="block mb text-sm">Tags</label>
-            <div className="mt-2">
-              <Select
-                components={animatedComponents}
-                value={selectedOption}
-                onChange={setSelectedOption}
-                options={options}
-                isMulti
-              />
+          <form onSubmit={handleAddArticle}>
+            <div className="mb-4">
+              <label className="block mb text-sm">Title</label>
+              <div className="mt-2">
+                <input
+                  type="name"
+                  name="title"
+                  required
+                  placeholder="Enter Title Name"
+                  className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                 />
+               </div>
             </div>
-          </div>
 
-          <div className="w-1/2">
-            <label className="block mb text-sm">Publisher</label>
-            <div className="mt-2">
-              <select name="publisher" className="w-full p-3 border rounded-md border-gray-400 text-gray-900">
-                {
-                  publishers?.map(item =>
-                    <option value={item?.publisher} key={item?._id}>{item?.publisher}</option>
-                  )
-                }
-              </select>
+            <div className="md:flex items-center gap-4 mb-4">
+               <div className="md:w-1/2">
+                <label className="block mb text-sm">Tags</label>
+                 <div className="mt-2">
+                  <Select
+                    components={animatedComponents}
+                     value={selectedOption}
+                    onChange={setSelectedOption}
+                     options={options}
+                    isMulti
+                   />
+                 </div>
+               </div>
+
+               <div className="md:w-1/2">
+                 <label className="block mb text-sm">Publisher</label>
+                 <div className="mt-2">
+                   <select name="publisher" className="w-full p-3 border rounded-md border-gray-400 text-gray-900">
+                     {
+                      publishers?.map(item =>
+                        <option value={item?.publisher} key={item?._id}>{item?.publisher}</option>
+                      )
+                    }
+                  </select>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="mb-4">
-          <label className="block mb text-sm">Description</label>
-          <div className="mt-2">
-            <input
-              type="name"
-              name="description"
-              required
-              placeholder="Enter Description"
-              className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
-            />
-          </div>
-        </div>
+            <div className="mb-4">
+               <label className="block mb text-sm">Description</label>
+              <div className="mt-2">
+                <input
+                  type="name"
+                  name="description"
+                  required
+                  placeholder="Enter Description"
+                   className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                />
+               </div>
+            </div>
 
-        <div className="mb-4">
-          <div className="mb-2 block">
-            <Label value="Upload Image" />
-          </div>
-          <FileInput name="image" />
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-purple-700 font-semibold w-full rounded-md text-center py-3 text-white"
-          >
-             Add Article
-          </button>
-        </div>
-      </form>
+            <div className="mb-4">
+              <div className="mb-2 block">
+                <Label value="Upload Image" />
+              </div>
+              <FileInput name="image" />
+            </div>
+    
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-purple-700 font-semibold w-full rounded-md text-center py-3 text-white"
+              >
+                 Add Article
+              </button>
+            </div>
+          </form>
+      </div>
     </div>
   );
 };

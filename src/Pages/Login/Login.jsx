@@ -79,7 +79,7 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center px-3 md:px-24">
+    <div className="flex flex-col md:flex-row items-center justify-center px-3 md:px-12">
       <div className="md:w-1/2">
         <img className="w-[600px] md:h-[600px]" src={imgBg} alt="" />
       </div>

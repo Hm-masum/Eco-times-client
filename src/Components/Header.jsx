@@ -2,23 +2,30 @@ import {Avatar, Navbar } from "flowbite-react";
 import { Link, NavLink } from "react-router-dom";
 import ButtonComp from "./ButtonComp";
 import useAuth from "../Hooks/useAuth";
+import useRole from "../Hooks/useRole";
 
 const Header = () => {
   const {user,logOut}=useAuth()
+  const [role]= useRole()
 
   const navLinks = (
     <>
       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/`}>Home</NavLink>
       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/allArticle`}>All Articles</NavLink>
       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/subscription`}>Subscription</NavLink>
-{
-  user && <>
-      <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/addArticle`}>Add Articles</NavLink>
-      <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/dashboard`}>Dashboard</NavLink>
-      <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/myArticle`}>My Articles</NavLink>
-      <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/premiumArticle`}>Premium Articles</NavLink>
-  </>
-}
+    {
+      role ==='admin' && <>
+       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/dashboard`}>Dashboard</NavLink>
+      </>
+    }
+    
+    {
+      user && <>
+       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/addArticle`}>Add Articles</NavLink>
+       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/myArticle`}>My Articles</NavLink>
+       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/premiumArticle`}>Premium Articles</NavLink>
+      </>
+    }
     </>
   );
 
@@ -35,10 +42,8 @@ const Header = () => {
         <div className="flex md:order-2">
           {user ?
             <div className="gap-4 flex items-center">
-              <Link to={`/myProfile`}>
-                <div className="flex flex-wrap gap-2">
-                   <Avatar img={user?.photoURL} rounded />
-                </div>
+              <Link to={`/myProfile`} className="flex flex-wrap gap-2">
+                <Avatar img={user?.photoURL} rounded />
               </Link>
               <button onClick={logOut}><ButtonComp value={"LogOut"}></ButtonComp></button>
             </div> :

@@ -22,7 +22,7 @@ const ArticleDetails = () => {
   return (
     <div className="space-y-3 mb-10">
       <figure className="space-y-2">
-        <img className="h-[215px] md:h-[350px] w-full" src={article?.image} alt="" />
+        <img className="h-[215px] md:h-[400px] w-full" src={article?.image} alt="" />
         <div className="lg:flex justify-between font-semibold">
           <p>Publisher : {article?.publisher}</p>
           <p className="flex items-center gap-2">Tags : {article?.tags?.map(tag => <div className="bg-purple-500 text-white rounded-xl p-2 text-center" key={article?._id}>#{tag}</div>)}</p>

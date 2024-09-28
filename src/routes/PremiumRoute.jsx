@@ -8,7 +8,7 @@ const PremiumRoute = ({children}) => {
 
     if (isLoading) return <LoadingSpinner />
 
-    if (role === 'admin') return children;
+    if (role === 'Premium user') return children;
     return <Navigate to='/' />
 };
 

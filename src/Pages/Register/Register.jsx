@@ -55,7 +55,7 @@ const Register = () => {
         name,
         email,
         image_url,
-        role:'normal user',
+        role:'user',
       };
       await axiosCommon.post("/users", userInfo)
 
@@ -68,7 +68,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex md:flex-row-reverse flex-col items-center justify-center px-3 md:px-24">
+    <div className="flex md:flex-row-reverse flex-col items-center justify-center px-3 md:px-12">
       <div className="md:w-1/2">
         <img className="w-[600px] md:h-[600px]" src={imgBg} alt="" />
       </div>

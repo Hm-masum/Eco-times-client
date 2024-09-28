@@ -112,7 +112,6 @@ const Sidebar = () => {
 
         <div>
           <hr />
-          {/* Profile Menu */}
           <NavLink
             to="/myProfile"
             className={({ isActive }) =>

@@ -149,12 +149,6 @@ const AllArticles = () => {
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Approve
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                  >
                     Premium
                   </th>
                   <th
@@ -199,11 +193,6 @@ const AllArticles = () => {
                       <NavLink to={`/article/${article._id}`}>
                           <SmallButton value={"Details"} />
                       </NavLink>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {article.status}
-                      </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       {article.status === "approved" ? (
@@ -262,7 +251,7 @@ const AllArticles = () => {
                   className="w-full rounded-md text-gray-900"
                 />
               </div>
-               <div className="flex gap-4 justify-center">
+               <div className="flex gap-3 justify-center">
                  <button onClick={() => setIsOpen(false)}><SmallButton value={"cancel"}/></button>
                  <button type="submit"><SmallButton value={"Decline"}/></button>
                </div>   
