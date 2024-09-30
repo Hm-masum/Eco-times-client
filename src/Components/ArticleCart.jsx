@@ -9,7 +9,7 @@ const ArticleCart = ({article,role}) => {
     const handleButton = () => {
         Swal.fire({
             title: "Premium Article !",
-            text: "This content is premium please get premium.",
+            text: "This content is premium. please get premium.",
             icon: "question"
         });
     }

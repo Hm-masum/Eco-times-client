@@ -101,9 +101,9 @@ const AddArticle = () => {
                  <div className="mt-2">
                   <Select
                     components={animatedComponents}
-                     value={selectedOption}
+                    value={selectedOption}
                     onChange={setSelectedOption}
-                     options={options}
+                    options={options}
                     isMulti
                    />
                  </div>

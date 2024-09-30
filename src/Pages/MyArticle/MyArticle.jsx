@@ -5,13 +5,11 @@ import LoadingSpinner from "../../Components/LoadingSpinner";
 import SmallButton from "../../Components/SmallButton";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useState } from "react";
 import { Tooltip } from "flowbite-react";
 
 const MyArticle = () => {
   const axiosSecure=useAxiosSecure();
   const {user}=useAuth()
-  let [isOpen, setIsOpen] = useState(false)
 
   const { data: articles = [], isLoading , refetch } = useQuery({
     queryKey: ["my-articles"],

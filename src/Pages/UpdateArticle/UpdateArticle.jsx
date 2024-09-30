@@ -19,7 +19,7 @@ const UpdateArticle = () => {
 
     const { mutateAsync } = useMutation({
       mutationFn: async articleData => {
-        const { data } = await axiosSecure.put(`update-article/${loadedData._id}`, articleData)
+        const { data } = await axiosSecure.put(`/update-article/${loadedData._id}`, articleData)
         return data
       },
       onSuccess: () => {
@@ -48,7 +48,6 @@ const UpdateArticle = () => {
             tags,
             image: image_url,
           };
-          //Post request to server
           await mutateAsync(articleData)
     
         } catch (err) {

@@ -7,32 +7,46 @@ import bg from "../../assets/pexels-iriser-1086584.jpg";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import useRole from "../../Hooks/useRole";
+import LoadingSpinner from "../../Components/LoadingSpinner";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useMutation } from "@tanstack/react-query";
 
 const MyProfile = () => {
   const { user, updateUserProfile } = useAuth();
   let [isOpen, setIsOpen] = useState(false)
-  const [role, isLoading]= useRole()
+  const [role, isLoading]= useRole();
+  const axiosSecure=useAxiosSecure()
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async userData => {
+      const { data } = await axiosSecure.patch(`/update-profile/${user?.email}`, userData)
+      return data
+    }
+  })
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const image = form.image.files[0];
-
     try {
       const image_url = await imageUpload(image);
+      const userData={name,image_url}
 
+      await mutateAsync(userData);
       updateUserProfile(name, image_url)
-        .then(() => {
-          toast.success("Update profile successfully");
-        })
-        .catch((error) => {
-          toast.error(error.message.split("/")[1].split(")")[0]);
-        });
+      .then(() => {
+        toast.success("Update profile successfully");
+      })
+      .catch((error) => {
+        toast.error(error.message.split("/")[1].split(")")[0]);
+      });
     } catch (err) {
       toast.error(err.message);
     }
   };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
       <div className="flex justify-center items-center lg:h-[80vh]">
