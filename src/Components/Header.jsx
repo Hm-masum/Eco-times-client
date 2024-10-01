@@ -13,6 +13,8 @@ const Header = () => {
       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/`}>Home</NavLink>
       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/allArticle`}>All Articles</NavLink>
       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/subscription`}>Subscription</NavLink>
+      <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/premiumArticle`}>Premium Articles</NavLink>
+
     {
       role ==='admin' && <>
        <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/dashboard`}>Dashboard</NavLink>
@@ -23,7 +25,6 @@ const Header = () => {
       user && <>
        <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/addArticle`}>Add Articles</NavLink>
        <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/myArticle`}>My Articles</NavLink>
-       <NavLink className={({isActive})=> isActive ? 'text-purple-500 font-semibold' : 'text-black'} to={`/premiumArticle`}>Premium Articles</NavLink>
       </>
     }
     </>

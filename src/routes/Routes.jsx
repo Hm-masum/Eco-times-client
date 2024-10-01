@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/premiumArticle",
-        element: <PrivateRoute><PremiumArticle></PremiumArticle></PrivateRoute>,
+        element: <PremiumArticle></PremiumArticle>
       },
       {
         path: "/allArticle",

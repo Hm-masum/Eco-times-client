@@ -2,35 +2,41 @@ import { useQuery } from "@tanstack/react-query";
 import ArticleCart from "../../Components/ArticleCart";
 import useAxiosCommon from "../../Hooks/useAxiosCommon";
 import LoadingSpinner from "../../Components/LoadingSpinner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useRole from "../../Hooks/useRole";
 import useAllPublisher from "../../Hooks/useAllPublisher";
 import Select from "react-select";
-import makeAnimated from 'react-select/animated';
+import makeAnimated from "react-select/animated";
 
 const AllArticle = () => {
   const axiosCommon = useAxiosCommon();
-  const [search, setSearch] = useState("");
   const [searchText, setSearchText] = useState("");
-  const [role, ] = useRole();
+  const [role,isLoading] = useRole();
   const [publishers, Loading] = useAllPublisher();
   const [selectedOption, setSelectedOption] = useState([]);
+  const [publisherItem, setPublisherItem] = useState("all");
+  const [allArticles, setAllArticles] = useState([]);
 
-  const { data: allArticles = [], isLoading,refetch } = useQuery({
-    queryKey: ["articles"],
-    queryFn: async () => {
-      const { data } = await axiosCommon.get(`/all-articles?search=${search}`);
-      return data;
-    },
-  });
+  
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setSearch(searchText);
-    refetch()
-  };
+  useEffect(() => {
+    let selectedTags=[];
+    selectedOption.map(tag=> selectedTags.push(tag.value))
+    
+    const getData = async () => {
+      const { data } = await axiosCommon(
+        `/all-articles?search=${searchText}&publisher=${publisherItem}&tags=${selectedTags}`
+      );
+      setAllArticles(data);
+    };
+    getData();
+  }, [publisherItem,searchText,selectedOption,axiosCommon]);
 
-  const articles=allArticles.filter(item=>item.status==='approved' || item.status==='premium')
+
+  const articles = allArticles.filter(
+    (item) => item.status === "approved" || item.status === "premium"
+  );
+
 
   const animatedComponents = makeAnimated();
   const options = [
@@ -44,40 +50,38 @@ const AllArticle = () => {
 
   if (isLoading || Loading) return <LoadingSpinner />;
 
-
-
   return (
     <div>
       <div className="my-5 gap-3 flex flex-col md:flex-row items-center justify-between">
-        <form onSubmit={handleSearch} className="md:w-[25%] w-full flex space-x-2 items-center">
-           <input
-              className="rounded-lg w-[70%]"
-              type="text"
-              onChange={(e) => setSearchText(e.target.value)}
-              value={searchText}
-              name="search"
-              placeholder="Enter title Name"
-              aria-label="Enter title Name"
-            />
-            <button type="submit" className="text-white w-[30%] bg-gradient-to-r from-purple-500     via-purple-600 to-purple-800 hover:bg-gradient-to-br focus:ring-4     focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800     rounded-lg text-sm px-4 py-3 font-semibold text-center">
-                Search
-            </button>
-        </form>
-
+        <div className="md:w-[25%] w-full flex space-x-2 items-center">
+          <input
+            className="rounded-lg w-full"
+            type="text"
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+            name="search"
+            placeholder="Enter title Name"
+            aria-label="Enter title Name"
+          />
+        </div>
 
         <div className="md:w-[40%] w-full flex flex-row items-center gap-3">
-          <div className="w-full">
-            <select className="border w-full rounded-lg">
-              <option value={""}>All Publisher</option>
-              {
-                publishers?.map(item =>
-                 <option value={item?.publisher} key={item?._id}>{item?.publisher}</option>
-                )
-              }
+           <div className="w-full">
+            <select
+              onChange={(e) => setPublisherItem(e.target.value)}
+              value={publisherItem}
+              className="border w-full rounded-lg"
+            >
+              <option value={"all"}>All Publisher</option>
+              {publishers?.map((item) => (
+                <option value={item?.publisher} key={item?._id}>
+                  {item?.publisher}
+                </option>
+              ))}
             </select>
-          </div>
+           </div>
 
-          <div className="w-full">
+           <div className="w-full">
             <Select
               className="w-full"
               components={animatedComponents}
@@ -86,14 +90,19 @@ const AllArticle = () => {
               options={options}
               isMulti
             />
-          </div>
-        </div>
 
+            
+           </div>
+        </div>
       </div>
-     
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {articles.map((article) => (
-          <ArticleCart key={article._id} article={article} role={role}></ArticleCart>
+          <ArticleCart
+            key={article._id}
+            article={article}
+            role={role}
+          ></ArticleCart>
         ))}
       </div>
     </div>
