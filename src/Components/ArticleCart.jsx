@@ -4,7 +4,7 @@ import { MdWorkspacePremium } from 'react-icons/md';
 import Swal from 'sweetalert2';
 
 const ArticleCart = ({article,role}) => {
-    const {_id,title,publisher,image,description,isPremium}=article;
+    const {_id,title,publisher,image,description,isPremium,views}=article;
 
     const handleButton = () => {
         Swal.fire({
@@ -28,7 +28,10 @@ const ArticleCart = ({article,role}) => {
           </div>
 
           <div className='space-y-2'>
-            <h4 className=' font-semibold'>{publisher}</h4>
+            <div className='flex items-center justify-between font-semibold'>
+              <h4>{publisher}</h4>
+              <p>Views : {views}</p>
+            </div>
 
             <h2 className='text-2xl font-semibold'>{title?.slice(0,50)}</h2>
 

@@ -15,10 +15,8 @@ const Publishers = () => {
             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 gap-4">
                 {
                     publishers.map(publisher => <div key={publisher.id}>
-                        <div>
                           <div className="border p-3 flex items-center justify-center rounded-xl"><img className="w-[200px] h-[200px]" src={publisher.image} alt="" /></div>
                           <h2 className="text-xl md:text-3xl font-semibold text-center">{publisher.publisher}</h2>
-                        </div>
                     </div>)
                 }
             </div>

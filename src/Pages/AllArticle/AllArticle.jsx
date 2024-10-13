@@ -17,12 +17,11 @@ const AllArticle = () => {
   const [publisherItem, setPublisherItem] = useState("all");
   const [allArticles, setAllArticles] = useState([]);
 
-  
 
   useEffect(() => {
     let selectedTags=[];
     selectedOption.map(tag=> selectedTags.push(tag.value))
-    
+
     const getData = async () => {
       const { data } = await axiosCommon(
         `/all-articles?search=${searchText}&publisher=${publisherItem}&tags=${selectedTags}`
@@ -36,7 +35,6 @@ const AllArticle = () => {
   const articles = allArticles.filter(
     (item) => item.status === "approved" || item.status === "premium"
   );
-
 
   const animatedComponents = makeAnimated();
   const options = [

@@ -2,19 +2,15 @@ import { Link } from "react-router-dom";
 
 const Subscription = () => {
   return (
-    <div className="my-10">
+    <div className="my-6">
       <div
-        style={{
-          backgroundImage:
-            "url(https://i.ibb.co/xXD7Zqv/pexels-ian-panelo-6564828.jpg)",
-        }}
-        className="h-[40vh] lg:h-[70vh] mt-6 bg-[linear-gradient(45deg,rgba(0.3,0.3,0.3,0.3),rgba(0.7,0.7,0.7,0.7))] bg-cover rounded-lg flex items-center"
+        className="h-[60vh] md:h-[40vh] lg:h-[70vh] bg-[linear-gradient(45deg,rgba(0,0,0,0.6),rgba(0,0,0,0.4)),url('https://i.ibb.co/xXD7Zqv/pexels-ian-panelo-6564828.jpg')] bg-slate-900 mt-6 bg-cover rounded-lg flex items-center"
       >
-        <div className="text-white px-6 space-y-3">
-          <h1 className="text-4xl font-extrabold text-black">
+        <div className="text-white px-6 space-y-4">
+          <h1 className="text-3xl md:text-5xl font-extrabold">
             Subscription Now!
           </h1>
-          <p className="lg:w-[45%] text-black font-semibold">
+          <p className="lg:w-[45%] font-semibold">
             Embark on a journey to excellence with our professional program.
             Elevate your knowledge and make your mark in the world of news.
           </p>

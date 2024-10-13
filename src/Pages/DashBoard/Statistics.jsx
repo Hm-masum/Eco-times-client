@@ -9,7 +9,7 @@ import {
   CartesianGrid,
   PieChart,
   Pie,
-  Legend,
+  Legend, 
 } from "recharts";
 
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];

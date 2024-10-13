@@ -55,6 +55,7 @@ const AddArticle = () => {
         postedDate: new Date().toLocaleDateString(),
         isPremium:'no',
         status:'pending',
+        views: 0
       };
       await mutateAsync(articleData)
 

@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import useAxiosCommon from "../../Hooks/useAxiosCommon";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Components/LoadingSpinner";
-import { Avatar } from "flowbite-react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 
 const ArticleDetails = () => {
@@ -16,6 +17,18 @@ const ArticleDetails = () => {
       return data
     },
   })
+
+  useEffect(()=>{
+     const updateView = async() => {
+       try{
+         await axiosCommon.patch(`/article/view/${id}`)
+       }
+       catch(error){
+         toast.error(error)
+       }
+     }
+     updateView();
+  },[axiosCommon,id])
 
   if (isLoading) return <LoadingSpinner />
 
