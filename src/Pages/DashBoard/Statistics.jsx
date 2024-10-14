@@ -13,23 +13,26 @@ import {
 } from "recharts";
 
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
 
 const Statistics = () => {
   const axiosSecure=useAxiosSecure()
 
   const { data: chartData = [] } = useQuery({
-    queryKey: ["users-chart"],
+    queryKey: ["publisher-stats"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/publisher-stats");
       return res.data;
     },
   });
 
-  // let count;
-  // for(let i=0;i<chartData.length;i++){
-  //   if(chartData[i]?.role==='admin')
-  // }
+  const { data: tagsData = [] } = useQuery({
+    queryKey: ["tags-stats"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/tags-stats");
+      return res.data;
+    },
+  });
 
   //Custom shape for bar chart
   const getPath = (x, y, width, height) => {
@@ -77,16 +80,16 @@ const Statistics = () => {
     );
   };
 
-  const pieChartData = chartData.map(data => {
-    return {name:data.role, value:data._id}
+  const pieChartData = tagsData.map(data => {
+    return {name:data.tags, value:data.quantity}
   })
 
+
   return (
-    <div>
-      <div className="flex">
-        <div className="w-1/2">
+    <div className="flex flex-col justify-center md:gap-12 overflow-hidden">
+        <div className="flex justify-center">
           <BarChart
-            width={300}
+            width={500}
             height={300}
             data={chartData}
             margin={{
@@ -97,10 +100,10 @@ const Statistics = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="publisher" />
             <YAxis />
             <Bar
-              dataKey="role"
+              dataKey="quantity"
               fill="#8884d8"
               shape={<TriangleBar />}
               label={{ position: "top" }}
@@ -112,15 +115,15 @@ const Statistics = () => {
           </BarChart>
         </div>
 
-        <div className="w-1/2">
-          <PieChart width={400} height={400}>
+        <div className="flex justify-center">
+          <PieChart width={400} height={300}>
             <Pie
               data={pieChartData}
               cx="50%"
               cy="50%"
               labelLine={false}
               label={renderCustomizedLabel}
-              outerRadius={80}
+              outerRadius={90}
               fill="#8884d8"
               dataKey="value"
             >
@@ -134,7 +137,6 @@ const Statistics = () => {
             <Legend></Legend>
           </PieChart>
         </div>
-      </div>
     </div>
   );
 };
