@@ -5,6 +5,7 @@ import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import LoadingSpinner from "../../Components/LoadingSpinner";
 import SectionTitle from "../../Components/SectionTitle";
+import CountUp from "react-countup";
 
 const Statistics = () => {
     const axiosCommon=useAxiosCommon()
@@ -20,7 +21,7 @@ const Statistics = () => {
     });
 
     let premiumUser=users.filter(item=>item?.role==='Premium user')
-    let normalUser=users.filter(item=>item?.role==='normal user')
+    let normalUser=users.filter(item=>item?.role==='user')
 
     if (isLoading) return <LoadingSpinner />;
 
@@ -33,7 +34,7 @@ const Statistics = () => {
             <div className="border-2 border-purple-200 rounded-lg p-4 flex items-center justify-center gap-5">
                 <div>
                     <p>Total user.</p>
-                    <p className="text-5xl font-semibold">{users.length}</p>
+                    <p className="text-5xl font-semibold"><CountUp end={users.length} duration={5}/></p>
                     <p>↗︎ 400 (22%)</p>
                 </div>
                 <div><FaUsers className="text-6xl text-orange-500"/></div>
@@ -42,7 +43,7 @@ const Statistics = () => {
             <div className="border-2 border-purple-200 rounded-lg p-4 flex items-center justify-center gap-5">
                 <div>
                     <p>Premium user.</p>
-                    <p className="text-5xl font-semibold">{premiumUser.length}</p>
+                    <p className="text-5xl font-semibold"><CountUp end={premiumUser.length} duration={5}/></p>
                     <p>↗︎ 400 (10%)</p>
                 </div>
                 <div><MdOutlineWorkspacePremium  className="text-6xl text-orange-500"/></div>
@@ -51,7 +52,7 @@ const Statistics = () => {
             <div className="border-2 border-purple-200 rounded-lg p-4 flex items-center justify-center gap-5">
                 <div>
                     <p>Normal user.</p>
-                    <p className="text-5xl font-semibold">{normalUser.length}</p>
+                    <p className="text-5xl font-semibold"><CountUp end={normalUser.length} duration={5}/></p>
                     <p>↗︎ 400 (60%)</p>
                 </div>
                 <div><HiMiniUserGroup  className="text-6xl text-orange-500"/></div>

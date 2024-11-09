@@ -42,8 +42,8 @@ const AddPublisher = () => {
   };
 
   return (
-    <div className="flex justify-center py-12 md:py-0 rounded-lg md:min-h-screen bg-gray-100 items-center">
-      <div className="md:w-[50%] p-6 bg-white rounded-xl shadow">
+    <div className="flex justify-center py-12 md:py-0 rounded-lg md:min-h-screen md:bg-gray-100 items-center">
+      <div className="lg:w-[50%] md:w-[90%] p-6 bg-white rounded-xl shadow">
         <h2 className="text-3xl mb-8 text-center font-semibold">Add Publisher</h2>
 
         <form onSubmit={handleAddPublisher}>

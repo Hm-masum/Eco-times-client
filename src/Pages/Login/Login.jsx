@@ -28,7 +28,6 @@ const Login = () => {
       toast.success('sign in successful')
     }
     catch(err){
-      // console.log(err)
       toast.error('sign in not successful')
       setLoading(false)
     }

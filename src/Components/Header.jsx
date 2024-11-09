@@ -34,7 +34,7 @@ const Header = () => {
     <div>
       <Navbar fluid rounded>
         <Navbar.Toggle />
-        <Navbar.Brand href="">
+        <Navbar.Brand>
           <span className="self-center whitespace-nowrap text-2xl md:text-3xl font-semibold dark:text-white">
             EcoTimes
           </span>
@@ -43,9 +43,11 @@ const Header = () => {
         <div className="flex md:order-2">
           {user ?
             <div className="gap-4 flex items-center">
-              <Link to={`/myProfile`} className="flex flex-wrap gap-2">
-                <Avatar img={user?.photoURL} rounded />
-              </Link>
+              <div>
+                 <Link to={`/myProfile`} className="flex flex-wrap gap-2">
+                   <Avatar img={user?.photoURL} rounded />
+                 </Link>
+              </div>
               <button onClick={logOut}><ButtonComp value={"LogOut"}></ButtonComp></button>
             </div> :
             <>

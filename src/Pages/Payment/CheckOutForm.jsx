@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ButtonComp from "../../Components/ButtonComp";
 import Swal from "sweetalert2";
 
-const CheckOutForm = ({ price }) => {
+const CheckOutForm = ({ price , plan}) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
@@ -75,27 +75,15 @@ const CheckOutForm = ({ price }) => {
 
     if (paymentIntent.status === "succeeded") {
       setTransactionId(paymentIntent.id);
-      // console.log(paymentIntent);
-
-      // 1. Create payment info object
-      const paymentInfo = {
-        name: user?.displayName,
-        email: user?.email,
-        transactionId: paymentIntent.id,
-        paymentPrice: price,
-        date: new Date(),
-      };
-
-      //console.log(paymentInfo);
 
       try {
-        const res = await axiosSecure.patch(`/users/premium/${user?.email}`);
-        //console.log(res);
+        const res = await axiosSecure.patch(`/users/premium/${user?.email}`,{plan: plan});
 
         if (res.data.modifiedCount > 0) {
           Swal.fire({
             icon: "success",
-            title: `${user.displayName} is a premium user now`,
+            title:"Congratulations",
+            text: `${user.displayName} is a premium user now.`,
             showConfirmButton: false,
             timer: 1500,
           });

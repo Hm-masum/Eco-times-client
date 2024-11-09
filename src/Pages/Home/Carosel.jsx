@@ -42,7 +42,7 @@ export default function Carosel() {
         {articles.map((article) => (
           <SwiperSlide key={article?.id}>
             <div
-              className="w-full h-[70vh] md:h-[80vh]"
+              className="w-full h-[60vh] lg:h-[80vh]"
               style={{
                 backgroundImage: `url(${article?.image})`, 
                 backgroundSize: 'cover', 

@@ -9,7 +9,7 @@ const FAQ = () => {
       
       <div className="md:flex items-center border-2 border-purple-300 rounded-xl p-2">
         <figure className="md:w-[50%] z-10">
-          <img src={FAQimg} className=" rounded-2xl" />
+          <img src={FAQimg} className="md:min-h-96 w-full rounded-2xl" />
         </figure>
         <div className="md:w-[50%]">
           <Accordion className="border-none">

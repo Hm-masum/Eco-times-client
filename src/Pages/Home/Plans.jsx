@@ -7,8 +7,8 @@ const Plans = () => {
     <div>
       <SectionTitle title={'Subscription'} body={'Unlock a World of Insights with Our Exclusive Subscription. Fresh, Engaging, and Tailored – Your Interests, Our Content'}></SectionTitle>
 
-      <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
-        <div className="border border-purple-300 rounded-xl md:w-1/3 space-y-24 p-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+        <div className="border border-purple-300 rounded-xl space-y-24 p-5">
           <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Normal user</h2>
             <div>
@@ -50,7 +50,7 @@ const Plans = () => {
           </div>
         </div>
 
-        <div className="border border-purple-300 rounded-xl md:w-1/3 space-y-24 p-5">
+        <div className="border border-purple-300 rounded-xl space-y-24 p-5">
           <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Premium user</h2>
             <div>
@@ -92,7 +92,7 @@ const Plans = () => {
           </div>
         </div>
 
-        <div className="border border-purple-300 rounded-xl md:w-1/3 space-y-24 p-5">
+        <div className="border border-purple-300 rounded-xl space-y-24 p-5">
           <div className="flex justify-between items-center">
             <h2 className="text-4xl font-semibold">Premium user</h2>
             <div>
